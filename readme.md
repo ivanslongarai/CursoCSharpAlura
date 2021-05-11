@@ -41,3 +41,10 @@ https://cursos.alura.com.br/course/csharp-parte-4-excecoes
 ###### Entenda como gerar arquivos XML de documentação para o Visual Studio e outras ferramentas;
 https://cursos.alura.com.br/course/csharp-biblioteca-dll-documentacao-nuget
 
+#### C# parte 6: Strings, expressões regulares e a classe Object
+###### Aprenda a manipular strings no C#
+###### Use os métodos IndexOf, Substring, Contains e outros da classe String
+###### Use expressões regulares
+###### Conheça a classe Regex
+###### Use os métodos da classe Object
+https://cursos.alura.com.br/course/csharp-string-regex-object

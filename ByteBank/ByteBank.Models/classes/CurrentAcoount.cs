@@ -5,10 +5,10 @@ using ByteBank.Models.Exceptions;
 namespace ByteBank.Models.Models
 {
     /// <summary> This class defines a corrent acoount at ByteBank Bank. </summary>
-    public class CurrentAcoount 
+    public class CurrentAcoount
     {
 
-        public static int TotalOfCurrentAccount { get; private set; }       
+        public static int TotalOfCurrentAccount { get; private set; }
         public double OperationFee { get; private set; }
 
         /// <summary>
@@ -22,10 +22,10 @@ namespace ByteBank.Models.Models
             if (agency.Trim() == "")
                 throw new ArgumentException(Constants.MsgInvalidParam, "CurrentAcoount.Constructor.agency");
             if (number.Trim() == "")
-                throw new ArgumentException(Constants.MsgInvalidParam, "CurrentAcoount.Constructor.number");            
+                throw new ArgumentException(Constants.MsgInvalidParam, "CurrentAcoount.Constructor.number");
             this.Agency = agency;
             this.Number = number;
-            this.Customer = customer ?? throw new ArgumentException(Constants.MsgInvalidParam, "CurrentAcoount.Constructor.customer"); 
+            this.Customer = customer ?? throw new ArgumentException(Constants.MsgInvalidParam, "CurrentAcoount.Constructor.customer");
             TotalOfCurrentAccount++;
             OperationFee = 30 / TotalOfCurrentAccount;
         }
@@ -35,8 +35,32 @@ namespace ByteBank.Models.Models
         public double Balance { get; protected set; }
         public Customer Customer { get; protected set; }
 
-        override public string ToString() => this.Agency + " | " + this.Number + " | " + this.Balance + " | " + this.Customer.Name +
-            " | " + Customer.DocumentId + " | " + Customer.Profession;
+        public override bool Equals(object obj)
+        {
+            CurrentAcoount o = (obj as CurrentAcoount);
+            if (o == null) 
+                return false;                
+            return this.Agency == o.Agency &&
+                this.Number == o.Number &&
+                this.Customer.Name == o.Customer.Name &&
+                this.Customer.DocumentId == o.Customer.DocumentId;
+        }
+
+        public override string ToString()
+        {
+            return $"Agency {this.Agency}" +
+                   $", Number {this.Number}" +
+                   $", Balance {this.Balance}" +
+                   $", CustomerName {this.Customer.Name}" +
+                   $", CustomerDocumentId {this.Customer.DocumentId}" +
+                   $", CustomerProfession {this.Customer.Profession}";
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
 
         public bool CashOut(double value)
         {
@@ -70,6 +94,6 @@ namespace ByteBank.Models.Models
             }
             return false;
         }
-        
+
     }
 }
