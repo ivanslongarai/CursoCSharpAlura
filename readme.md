@@ -48,3 +48,12 @@ https://cursos.alura.com.br/course/csharp-biblioteca-dll-documentacao-nuget
 ###### Conheça a classe Regex
 ###### Use os métodos da classe Object
 https://cursos.alura.com.br/course/csharp-string-regex-object
+
+#### C# parte 7: Array e tipos genéricos
+###### Conheça os arrays
+###### Crie uma lista dinâmica
+###### Use tipos genéricos
+###### Aprenda como usar o argumentos params
+###### Use Argumentos opcionais e nomeados
+###### Crie indexadores em classes
+https://cursos.alura.com.br/course/csharp-array-tipo-generico
