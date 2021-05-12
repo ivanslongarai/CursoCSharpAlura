@@ -5,7 +5,7 @@ using ByteBank.Models.Exceptions;
 namespace ByteBank.Models.Models
 {
     /// <summary> This class defines a corrent acoount at ByteBank Bank. </summary>
-    public class CurrentAcoount
+    public class CurrentAcoount 
     {
 
         public static int TotalOfCurrentAccount { get; private set; }
@@ -94,6 +94,5 @@ namespace ByteBank.Models.Models
             }
             return false;
         }
-
     }
 }

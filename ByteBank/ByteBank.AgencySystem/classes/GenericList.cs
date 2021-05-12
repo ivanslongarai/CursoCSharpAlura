@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByteBank.AgencySystem.List
+namespace ByteBank.AgencySystem.Lists
 {
     public class GenericList<T>
     {
@@ -67,7 +67,7 @@ namespace ByteBank.AgencySystem.List
         public void ListAll()
         {
             for (int i = 0; i < _items.Length; i++)
-                Console.WriteLine($" Index: {i}, Objeto: {_items[i].ToString()}");
+                Console.WriteLine($" Index: {i}, Object: {_items[i].ToString()}");
         }
 
         public T GetByIndex(int index)

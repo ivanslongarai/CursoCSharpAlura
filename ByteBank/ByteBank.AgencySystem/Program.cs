@@ -2,7 +2,11 @@
 using ByteBank.Models.Models;
 using ByteBank.AgencySystem.Helpers;
 using System.Text.RegularExpressions;
-using ByteBank.AgencySystem.List;
+using ByteBank.AgencySystem.Lists;
+using System.Collections.Generic;
+using ByteBank.AgencySystem.Extensions;
+using ByteBank.AgencySystem.Interfaces;
+using System.Linq;
 
 namespace ByteBank.AgencySystem
 {
@@ -10,7 +14,147 @@ namespace ByteBank.AgencySystem
     {
         static void Main(string[] args)
         {
+            ModuleEighth04();
+        }
 
+        static void ModuleEighth04()
+        {
+            /* This code is just for test...*/
+
+            var customer01 = new Customer("Zé", "000", "Developer");
+            var customer02 = new Customer("José", "000", "Analyst");
+            var customer04 = new Customer("Bianca", "000", "Tester");
+            var customer03 = new Customer("Alexandre", "000", "Quality Analyst");           
+
+            var currentAcoountList = new List<CurrentAcoount>()
+            {
+                new CurrentAcoount("B123", "005", customer01),
+                new CurrentAcoount("C123", "002", customer02),
+                new CurrentAcoount("A123", "007", customer03),
+                null, // testing with a null value
+                new CurrentAcoount("D123", "001", customer04)
+            };
+
+            try
+            {
+
+                ExtensionList.ListAll(currentAcoountList);
+                Console.WriteLine("Sorting items by Agency");
+                currentAcoountList.Sort(new CurrentAcoountCompareByAgency());
+                ExtensionList.ListAll(currentAcoountList);
+                Console.WriteLine("Sorting items by Number");
+                currentAcoountList.Sort(new CurrentAcoountCompareByNumber());
+                ExtensionList.ListAll(currentAcoountList);
+                
+                Console.WriteLine("Sorting items by Customer.Name");                
+                var sortedCurrentAcoountsByCustomerName = currentAcoountList.OrderBy(currentAcoount => {
+                                                                                                 /* ^
+                                                                                                     `- Lambda expression */
+                    if (!(currentAcoount == null) && !(currentAcoount.Customer == null) && !(currentAcoount.Customer.Name == null))
+                            return currentAcoount.Customer.Name;
+                        return "ZZZ";
+                    });
+
+                foreach (var item in sortedCurrentAcoountsByCustomerName)
+                {
+                    if (!(item == null))
+                        Console.WriteLine(item.ToString());
+                }
+
+                Console.WriteLine("Sorting items by Customer.Profession");
+
+                var sortedCurrentAcoountsByCustomerProfession = currentAcoountList
+                        //System.Linq
+                        .Where(currentAcoount => currentAcoount != null)
+                        .OrderBy(currentAcoount => currentAcoount.Customer.Profession);
+
+                foreach (var item in sortedCurrentAcoountsByCustomerProfession)
+                    Console.WriteLine(item.ToString());
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            Wait();
+        }
+
+        static void ModuleEighth03()
+        {
+            /* This code is just for test...*/
+
+            var list = new List<int>();
+
+            Console.WriteLine("Adding many items without sorting method");
+            list.Add(10, 5, 8, 9, 6, 3, 2);
+            ExtensionList.ListAll<int>(list);
+
+            Console.WriteLine("Sorting items");
+            list.Sort();
+            ExtensionList.ListAll<int>(list);
+
+            var list2 = new List<string>();
+
+            Console.WriteLine("Adding many items without sorting method");
+            list2.Add("Zé", "Taís", "Bruno", "André", "Fábio", "Josefine", "Carlos", "Pedro");
+            ExtensionList.ListAll<string>(list2);
+
+            Console.WriteLine("Sorting items");
+            list2.Sort();
+            ExtensionList.ListAll<string>(list2);
+
+
+            Wait();
+        }
+
+        static void ModuleEighth02()
+        {
+            /* This code is just for test...*/
+
+            var customer = new Customer("Ivan", "000", "Developer");
+            var currentAcoount = new CurrentAcoount("123", "456", customer);
+            currentAcoount.Deposit(2000);
+            Console.WriteLine(currentAcoount.Balance);
+
+            Wait();
+        }
+
+        static void ModuleEighth01()
+        {
+            /* This code is just for test...*/
+
+            List<int> list = new List<int>();
+
+            Console.WriteLine("Adding item value 10");
+            list.Add(10);
+            Console.WriteLine("Adding item value 20");
+            list.Add(20);
+            Console.WriteLine("Adding item value 30");
+            list.Add(30);
+
+            Console.WriteLine("Adding item values 40, 50, 60");
+            list.AddRange(new int[] { 40, 50, 60 });
+
+            Console.WriteLine("Adding item values 70, 80, 90");
+            list.Add<int>(70, 80, 90);
+
+            Console.WriteLine("Count: " + list.Count);
+            ExtensionList.ListAll<int>(list);
+            Console.WriteLine("Removing item value 10");
+            list.Remove(10);
+            Console.WriteLine("Count: " + list.Count);
+            ExtensionList.ListAll<int>(list);
+
+            Console.WriteLine("");
+            Console.WriteLine($"Indexer {0}: {list[0]}");
+            Console.WriteLine($"Indexer {1}: {list[1]}");
+
+            Wait();
+        }
+
+        static void ModuleSeven05()
+        {
             /* This code is just for test...*/
 
             GenericList<Customer> list = new GenericList<Customer>();

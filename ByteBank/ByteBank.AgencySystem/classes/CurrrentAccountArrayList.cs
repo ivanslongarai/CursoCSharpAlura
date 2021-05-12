@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ByteBank.Models.Models;
 
-namespace ByteBank.AgencySystem.List
+namespace ByteBank.AgencySystem.Lists
 {
     public class CurrentAccountArrayList
     {
