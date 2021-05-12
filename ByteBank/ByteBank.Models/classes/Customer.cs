@@ -23,6 +23,27 @@ namespace ByteBank.Models.Models
             TotalOfCustomer++;
         }
 
+        public override string ToString()
+        {
+            return $"Name {this.Name}" +
+                   $", DocumentId {this.DocumentId}" +
+                   $", Profession {this.Profession}";
+        }
+        
+        public override bool Equals(object obj)
+        {
+            Customer o = (obj as Customer);
+            if (o == null)
+                return false;
+            return this.Name == o.Name &&
+                this.DocumentId == o.DocumentId;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public String Name { get; }
         public String DocumentId { get; }
         public String Profession { get; set; }

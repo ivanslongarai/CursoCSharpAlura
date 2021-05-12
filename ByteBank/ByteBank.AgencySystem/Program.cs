@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ByteBank.Models.Resources;
-using ByteBank.Models.Exceptions;
-using ByteBank.Models.Interfaces;
 using ByteBank.Models.Models;
-using Humanizer;
 using ByteBank.AgencySystem.Helpers;
 using System.Text.RegularExpressions;
+using ByteBank.AgencySystem.List;
 
 namespace ByteBank.AgencySystem
 {
@@ -18,6 +11,169 @@ namespace ByteBank.AgencySystem
         static void Main(string[] args)
         {
 
+            /* This code is just for test...*/
+
+            GenericList<Customer> list = new GenericList<Customer>();
+
+            Customer[] customerList = new Customer[]
+            {
+                new Customer("Ivan", "000000", "Developer"),
+                new Customer("Maria", "000000", "Director"),
+                new Customer("José", "000000", "Driver")
+            };
+
+            list.Add(customerList);
+            Console.WriteLine(list.Count());
+            list.ListAll();
+            list.Remove(new Customer("Maria", "000000", "Director"));
+            Console.WriteLine(list.Count());
+            list.ListAll();
+
+            Console.WriteLine("");
+            Console.WriteLine($"Indexer {0}: {list[0]}");
+            Console.WriteLine($"Indexer {1}: {list[1]}");
+
+            list.Add(customerList);
+
+            Wait();
+
+        }
+
+        static void ModuleSeven04()
+        {
+            /* This code is just for test...*/
+
+            ObjectList list = new ObjectList();
+
+            Customer[] customerList = new Customer[]
+            {
+                new Customer("Ivan", "000000", "Developer"),
+                new Customer("Maria", "000000", "Director"),
+                new Customer("José", "000000", "Driver")
+            };
+
+            list.Add(customerList);
+            Console.WriteLine(list.Count());
+            list.ListAll();
+            list.Remove(new Customer("Maria", "000000", "Director"));
+            Console.WriteLine(list.Count());
+            list.ListAll();
+
+            Console.WriteLine("");
+            Console.WriteLine($"Indexer {0}: {list[0]}");
+            Console.WriteLine($"Indexer {1}: {list[1]}");
+
+            list.Add(customerList);
+
+            Wait();
+        }
+
+        static void ModuleSeven03()
+        {
+            /* This code is just for test...*/
+
+            CurrentAccountArrayList list = new CurrentAccountArrayList();
+
+            Customer customer = new Customer("Ivan", "12345678911", "Developer");
+
+
+            CurrentAcoount[] currentAcoountArray = new CurrentAcoount[]
+            {
+                new CurrentAcoount("123", "000000", customer),
+                new CurrentAcoount("456", "000000", customer),
+                new CurrentAcoount("789", "000000", customer)
+            };
+
+            list.Add(currentAcoountArray);
+
+            list.Add(
+                new CurrentAcoount("123", "000000", customer),
+                new CurrentAcoount("456", "000000", customer),
+                new CurrentAcoount("789", "000000", customer));
+
+            foreach (CurrentAcoount cc in currentAcoountArray)
+                list.Add(cc);
+
+            Console.WriteLine(list.Count());
+            list.ListAll();
+            list.Remove(new CurrentAcoount("456", "000000", customer));
+            Console.WriteLine(list.Count());
+            list.ListAll();
+
+            try
+            {
+                int index = 1;
+                Console.WriteLine($"ByIndex {index}: {list.GetByIndex(index)}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            try
+            {
+                Console.WriteLine($"Indexer {1}: {list[100]}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            Console.WriteLine();
+            Wait();
+        }
+
+        static void ModuleSeven02()
+        {
+
+            /* This code is just for test...*/
+
+            Customer customer = new Customer("Ivan", "12345678911", "Developer");
+            
+            CurrentAcoount[] currentAcoountArray = new CurrentAcoount[] 
+            {
+                new CurrentAcoount("123", "112233", customer),
+                new CurrentAcoount("456", "445566", customer),
+                new CurrentAcoount("789", "778899", customer)
+            };
+
+            foreach (CurrentAcoount cc in currentAcoountArray) {
+                Console.WriteLine(cc.ToString());
+            }
+
+            Array.Resize(ref currentAcoountArray, currentAcoountArray.Length + 1);
+                currentAcoountArray[3] = new CurrentAcoount("000", "999999", customer);
+            Console.WriteLine(currentAcoountArray[3].ToString());
+
+            Wait();
+
+        }
+
+        static void ModuleSeven01()
+        {
+            /* This code is just for test...*/
+
+            int[] ages = new int[3];
+
+            ages[0] = 10;
+            ages[1] = 20;
+            ages[2] = 30;
+
+            float average = 0;
+
+            for (int i = 0; i < ages.Length; i++)
+            {
+                average += ages[i];
+            }
+
+            average /= ages.Length;
+            Console.WriteLine($"The average of the ages array values is {average}");
+
+            Wait();
+        }
+
+        static void ModuleSix()
+        {
             /* This code is just for test...*/
 
             Customer c = new Customer("Ivan", "888", "Developer");
@@ -54,10 +210,15 @@ namespace ByteBank.AgencySystem
             Console.WriteLine(extractor.GetValue("moedaDestino"));
             Console.WriteLine(extractor.GetValue("valor"));
 
+            Wait();
+
+        }
+
+        static void Wait()
+        {
             Console.WriteLine("");
             Console.WriteLine("Press any key to finish it...");
             Console.ReadLine();
-
         }
     }
 }

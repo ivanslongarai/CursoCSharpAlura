@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\CurrrentAccountArrayList.cs" />
+    <Compile Include="classes\GenericList.cs" />
+    <Compile Include="classes\ObjectList.cs" />
     <Compile Include="classes\UrlArgumentsExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
