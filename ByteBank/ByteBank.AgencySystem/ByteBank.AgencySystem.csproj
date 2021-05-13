@@ -51,6 +51,7 @@
     <Compile Include="classes\GenericList.cs" />
     <Compile Include="classes\ObjectList.cs" />
     <Compile Include="classes\UrlArgumentsExtractor.cs" />
+    <Compile Include="DealingWithStreamDirectly.cs" />
     <Compile Include="interfaces\CurrentAcoountCompareByNumber .cs" />
     <Compile Include="interfaces\CurrentAcoountCompareByAgency.cs" />
     <Compile Include="Program.cs" />
@@ -65,6 +66,10 @@
       <Project>{094c23ec-de62-46be-a92d-900d01ff6005}</Project>
       <Name>ByteBank.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AcoountsWithComma.txt" />
+    <Content Include="AcoountsWithSpace.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

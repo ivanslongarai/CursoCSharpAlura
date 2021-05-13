@@ -7,19 +7,200 @@ using System.Collections.Generic;
 using ByteBank.AgencySystem.Extensions;
 using ByteBank.AgencySystem.Interfaces;
 using System.Linq;
+using System.IO;
+using System.Text;
 
 namespace ByteBank.AgencySystem
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
+        {            
+            ModuleNine08();
+        }
+
+        static void ModuleNine08()
         {
-            ModuleEighth04();
+            /* This code is just for testing...*/
+
+            // Waring, it allocates memory for all the AcoountsWithComma file
+            // it should be used just with small files... for big ones, we can use the others previous options....
+
+            var lines = File.ReadAllLines("../../AcoountsWithComma.txt");
+            Console.WriteLine(lines.Length);
+            foreach (var line in lines)
+                Console.WriteLine(line);
+
+            File.WriteAllText("../../testing File.WriteAllText Method.txt", "any text....");
+
+            var readBytes = File.ReadAllBytes("../../AcoountsWithComma.txt");
+            Console.WriteLine($"The AcoountsWithComma.txt file has {readBytes.Length / 1000} Kilobytes...");
+
+            Console.WriteLine("Inform your name please:");
+            var pensonName = Console.ReadLine();
+            Console.WriteLine($"The person name is: {pensonName}");
+            Wait();
+        }
+
+        //using the Stream from the input console
+        static void ModuleNine07()
+        {
+            /* This code is just for testing...*/
+
+            using (var inputFlow = Console.OpenStandardInput())
+                using (var fs = new FileStream("../../ConsoleInput.txt", FileMode.Create))
+            {
+                var buffer = new byte[1024];
+                while (true)
+                {
+                    var readBytes = inputFlow.Read(buffer, 0, 1024);
+                    if (readBytes <= 2)
+                        break;
+                    fs.Write(buffer, 0, readBytes);
+                    fs.Flush();
+                    Console.WriteLine($"Bytes read from the Console: {readBytes}");
+                }
+            }
+
+            Wait();
+        }
+
+        //Binary writing and reading
+        static void ModuleNine06()
+        {
+            /* This code is just for testing...*/
+
+            //writing as binary file format
+            using (var fs = new FileStream("../../CurrentAccount.txt", FileMode.Create))
+                using (var writer = new BinaryWriter(fs))
+            {
+                writer.Write(123488); // agency
+                writer.Write(567866); // number acoount
+                writer.Write(9101.5); // balance
+                writer.Write("Ivan"); // customer.name
+            }
+
+            //reading a binary file format
+            using (var fs2 = new FileStream("../../CurrentAccount.txt", FileMode.Open))
+                using (var reader = new BinaryReader(fs2))
+                {
+                    var agency = reader.ReadInt32();
+                    var number = reader.ReadInt32();
+                    var balance = reader.ReadDouble();
+                    var customerName = reader.ReadString();
+                    Console.WriteLine($"Agency { agency }, Number {number}, Balance {balance}, CustomerName {customerName}");
+                }
+
+            Wait();
+        }
+
+        //using Flush();
+        static void ModuleNine05()
+        {
+            /* This code is just for testing...*/
+
+            var pathNewFile = "../../ExportedAccounts.csv";
+            using (var fileFlow = new FileStream(pathNewFile, FileMode.Create)) // FileMode.Create: override the original file
+            {
+                using (var writer = new StreamWriter(fileFlow, Encoding.UTF8))
+                {
+                    for (int i=0; i < 10; i++)
+                    {
+                        writer.WriteLine("line " + i);
+                        Console.WriteLine($"Line {i} written, press Enter to continue...");
+                        writer.Flush();
+                        Console.ReadLine();
+                    }                                      
+                }
+            }
+
+            Wait();
+        }
+
+        //creating a CSV file using StreamWriter
+        static void ModuleNine04()
+        {
+            /* This code is just for testing...*/
+
+            var pathNewFile = "../../ExportedAccounts.csv";
+            using (var fileFlow = new FileStream(pathNewFile, FileMode.Create)) // FileMode.Create: override the original file
+            {
+                using (var writer = new StreamWriter(fileFlow, Encoding.UTF8))
+                    writer.Write("456, 45874, 9.652, Ivan S. Longarai");
+            }
+            
+            Wait();
+        }
+
+        //creating a CSV file dealing with bytes
+        static void ModuleNine03()
+        {
+            /* This code is just for testing...*/
+
+            var pathNewFile = "../../ExportedAccounts.csv";
+            using (var fileFlow = new FileStream(pathNewFile, FileMode.Create))
+            {
+                var currentAcoountAsString = "456, 45874, 9.652, Ivan Longarai";
+                var encoding = Encoding.UTF8;
+                fileFlow.Write(encoding.GetBytes(currentAcoountAsString), 0, encoding.GetByteCount(currentAcoountAsString));
+            }
+
+            Wait();
+        }
+
+        // using StreamReader
+        static void ModuleNine02()
+        {
+            /* This code is just for testing...*/
+
+            var fileToLoad = "../../AcoountsWithComma.txt";
+            try
+            {
+                var list = new List<CurrentAcoount>();
+
+                using (var fileFlow = new FileStream(fileToLoad, FileMode.Open)) // using private word key closes the file automatically                
+                    using (var reader = new StreamReader(fileFlow))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();                            
+                            var currentAccount = convertStringToCurrentAcoount(line);
+                            list.Add(currentAccount);
+                        }
+                    }
+
+                ExtensionList.ListAll(list);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("It was not possible to read the entire file content.");
+            }
+
+            Wait();
+        }
+
+        static CurrentAcoount convertStringToCurrentAcoount(string line)
+        {           
+            var fields = line.Split(',');          
+            string agency = fields[0];
+            string number = fields[1];
+            string balance = fields[2].Replace('.', ',');
+            string customerName = fields[3];
+            Customer customer = new Customer(customerName, "000", "Developer");
+            var currentAcoount = new CurrentAcoount(agency, number, customer);
+            currentAcoount.Deposit(double.Parse(balance));
+            return currentAcoount;
+        }
+
+        static void ModuleNine01()
+        {
+            DealingWithStreamDirectly();
         }
 
         static void ModuleEighth04()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             var customer01 = new Customer("Zé", "000", "Developer");
             var customer02 = new Customer("José", "000", "Analyst");
@@ -82,7 +263,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleEighth03()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             var list = new List<int>();
 
@@ -110,7 +291,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleEighth02()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             var customer = new Customer("Ivan", "000", "Developer");
             var currentAcoount = new CurrentAcoount("123", "456", customer);
@@ -122,7 +303,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleEighth01()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             List<int> list = new List<int>();
 
@@ -155,7 +336,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleSeven05()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             GenericList<Customer> list = new GenericList<Customer>();
 
@@ -185,7 +366,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleSeven04()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             ObjectList list = new ObjectList();
 
@@ -214,7 +395,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleSeven03()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             CurrentAccountArrayList list = new CurrentAccountArrayList();
 
@@ -270,7 +451,7 @@ namespace ByteBank.AgencySystem
         static void ModuleSeven02()
         {
 
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             Customer customer = new Customer("Ivan", "12345678911", "Developer");
             
@@ -295,7 +476,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleSeven01()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             int[] ages = new int[3];
 
@@ -318,7 +499,7 @@ namespace ByteBank.AgencySystem
 
         static void ModuleSix()
         {
-            /* This code is just for test...*/
+            /* This code is just for testing...*/
 
             Customer c = new Customer("Ivan", "888", "Developer");
             CurrentAcoount cc = new CurrentAcoount("123", "654", c);

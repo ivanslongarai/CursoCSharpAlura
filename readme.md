@@ -66,3 +66,15 @@
 - ###### Conheça expressões lambda
 - ###### Conheça o Linq
 - ###### https://cursos.alura.com.br/course/csharp-list-lambda-linq
+
+#### 9. C# : Entrada e saída (I/O) com streams
+- ###### Abra e crie arquivos com C#
+- ###### Compreenda o que é encoding, UTF8, Unicode, ASCII e outros
+- ###### Use buffers para lidar com fluxo de dados
+- ###### Crie arquivos binários
+- ###### Conheça a classe File
+- ###### https://cursos.alura.com.br/course/csharp-io
+
+#### 10. Alura Live#40 - História e futuro do C#
+- ###### https://www.facebook.com/AluraCursosOnline/videos/1402802573167649/
+https://www.facebook.com/AluraCursosOnline/videos/1402802573167649/
