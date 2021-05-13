@@ -77,4 +77,3 @@
 
 #### 10. Alura Live#40 - História e futuro do C#
 - ###### https://www.facebook.com/AluraCursosOnline/videos/1402802573167649/
-https://www.facebook.com/AluraCursosOnline/videos/1402802573167649/
